@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNetCoreMastersToDoList", "ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList.csproj", "{D1C2AA5A-1B9E-4BA0-B040-52AD6A2D0CD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{42CA6CCE-6833-405A-834D-163EF1481E55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1C2AA5A-1B9E-4BA0-B040-52AD6A2D0CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C2AA5A-1B9E-4BA0-B040-52AD6A2D0CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C2AA5A-1B9E-4BA0-B040-52AD6A2D0CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C2AA5A-1B9E-4BA0-B040-52AD6A2D0CD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42CA6CCE-6833-405A-834D-163EF1481E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42CA6CCE-6833-405A-834D-163EF1481E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42CA6CCE-6833-405A-834D-163EF1481E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42CA6CCE-6833-405A-834D-163EF1481E55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33701B47-FE9A-406F-808D-D767E040C530}
+	EndGlobalSection
+EndGlobal

@@ -5,23 +5,60 @@ using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
+    [ApiController]
     public class ItemsController : ControllerBase
     {
-        public IActionResult Get(int id)
+        [HttpGet, Route("items")]
+        public IActionResult GetAll()
         {
-            return Ok(id);
+            var items = ItemService.GetAll();
+            return Ok(items);
         }
 
-        public IActionResult Post(ItemCreateBindingModel itemCreateBindingModel)
+        [HttpGet, Route("items/{itemId}")]
+        public IActionResult Get(int itemId)
+        {
+            var item = ItemService.Get(itemId);
+            return Ok(item);
+        }
+
+        [HttpGet, Route("items/filterBy")]
+        public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
+        {
+            return Ok(null);
+        }
+
+        [HttpPost, Route("items")]
+        public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateModel)
         {
             var itemDTO = new ItemDTO()
             {
-                Text = itemCreateBindingModel.Text
+                Text = itemCreateModel.Text
             };
 
-            ItemService.Save(itemDTO);
+            var isSuccess = ItemService.Save(itemDTO);
 
-            return Ok(true);
+            return Ok(isSuccess);
+        }
+
+        [HttpPut, Route("items/{itemId}")]
+        public IActionResult Put(int itemId, [FromBody] ItemCreateBindingModel itemCreateModel)
+        {
+            var itemDTO = new ItemDTO()
+            {
+                Id = itemId,
+                Text = itemCreateModel.Text
+            };
+
+            var isSuccess = ItemService.Update(itemDTO);
+            return Ok(isSuccess);
+        }
+
+        [HttpDelete, Route("items/{itemId}")]
+        public IActionResult Delete(int itemId)
+        {
+            var isSuccess = ItemService.Delete(itemId);
+            return Ok(isSuccess);
         }
     }
 }

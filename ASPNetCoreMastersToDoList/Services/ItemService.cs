@@ -1,49 +1,64 @@
 ﻿using DomainModels;
+using Repositories;
 using Services.DTO;
 
 namespace Services
 {
-    public class ItemService
+    public class ItemService : IItemService
     {
-        private static List<Item> Items = new List<Item>();
+        protected readonly IItemRepository _itemRepository;
 
-        public static List<Item> GetAll()
+        public ItemService(IItemRepository itemRepository)
         {
-            return Items;
+            _itemRepository = itemRepository;
+        }
+        public IEnumerable<ItemDTO> GetAll()
+        {
+            return _itemRepository.All()
+                .Select(x => MapItem(x))
+                .AsEnumerable<ItemDTO>();
         }
 
-        public static Item Get(int itemId)
+        public ItemDTO Get(int itemId)
         {
-            var item = new Item();
-            item = Items.Find(x => x.Id == itemId);
-            return item ?? new Item();
+            var item = _itemRepository.All()
+                .Where(x => x.Id == itemId).FirstOrDefault();
+            return MapItem(item);
         }
 
-        public static List<Item> GetByFilter(Dictionary<string, string> filters)
+        public IEnumerable<ItemDTO> GetAllByFilter(ItemByFilterDTO filters)
         {
-            return new List<Item>();
+            var list = _itemRepository.All()
+                .Where(x => x.Text.Contains(filters.Text, StringComparison.OrdinalIgnoreCase))
+                .Select(x => MapItem(x))
+                .AsEnumerable<ItemDTO>();
+            return list;
         }
 
-        public static bool Save(ItemDTO item)
+        public void Add(ItemDTO itemDTO)
         {
-            int max = Items.Max(x => x.Id);
-            Items.Add(new Item()
-            {
-                Id = max ++,
-                Text = item.Text
-            });
-
-            return true;
+            _itemRepository.Save(itemDTO.Map());
         }
 
-        public static bool Update(ItemDTO item)
+        public void Update(ItemDTO itemDTO)
         {
-            return true;
+            _itemRepository.Save(itemDTO.Map());
         }
 
-        public static bool Delete(int itemId)
+        public void Delete(int itemId)
         {
-            return true;
+            _itemRepository.Delete(itemId);
+        }
+
+        private ItemDTO MapItem(Item? item)
+        {
+            return item == null ?
+                new ItemDTO() :
+                new ItemDTO()
+                {
+                    Id = item.Id,
+                    Text = item.Text
+                };
         }
     }
 }

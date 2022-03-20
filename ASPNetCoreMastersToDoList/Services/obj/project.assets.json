@@ -11,6 +11,19 @@
         "runtime": {
           "bin/placeholder/DomainModels.dll": {}
         }
+      },
+      "Repositories/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "DomainModels": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Repositories.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Repositories.dll": {}
+        }
       }
     }
   },
@@ -19,11 +32,17 @@
       "type": "project",
       "path": "../DomainModels/DomainModels.csproj",
       "msbuildProject": "../DomainModels/DomainModels.csproj"
+    },
+    "Repositories/1.0.0": {
+      "type": "project",
+      "path": "../Repositories/Repositories.csproj",
+      "msbuildProject": "../Repositories/Repositories.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "DomainModels >= 1.0.0"
+      "DomainModels >= 1.0.0",
+      "Repositories >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -65,6 +84,9 @@
           "projectReferences": {
             "C:\\Users\\gian.salaritan\\source\\repos\\ASPNetCoreMasters\\ASPNetCoreMastersToDoList\\DomainModels\\DomainModels.csproj": {
               "projectPath": "C:\\Users\\gian.salaritan\\source\\repos\\ASPNetCoreMasters\\ASPNetCoreMastersToDoList\\DomainModels\\DomainModels.csproj"
+            },
+            "C:\\Users\\gian.salaritan\\source\\repos\\ASPNetCoreMasters\\ASPNetCoreMastersToDoList\\Repositories\\Repositories.csproj": {
+              "projectPath": "C:\\Users\\gian.salaritan\\source\\repos\\ASPNetCoreMasters\\ASPNetCoreMastersToDoList\\Repositories\\Repositories.csproj"
             }
           }
         }

@@ -7,14 +7,41 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "Services/1.0.0": {
+        "dependencies": {
+          "DomainModels": "1.0.0",
+          "Repositories": "1.0.0"
+        },
         "runtime": {
           "Services.dll": {}
+        }
+      },
+      "DomainModels/1.0.0": {
+        "runtime": {
+          "DomainModels.dll": {}
+        }
+      },
+      "Repositories/1.0.0": {
+        "dependencies": {
+          "DomainModels": "1.0.0"
+        },
+        "runtime": {
+          "Repositories.dll": {}
         }
       }
     }
   },
   "libraries": {
     "Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DomainModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Repositories/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

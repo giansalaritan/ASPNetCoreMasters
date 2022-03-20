@@ -1,64 +1,63 @@
 ﻿using ASPNetCoreMastersToDoList.BindingModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using Services.DTO;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        [HttpGet, Route("items")]
+        private readonly IItemService _itemService;
+
+        public ItemsController(IItemService itemService)
+        {
+            _itemService = itemService;
+        }
+
+        [HttpGet]
+        [Route("items")]
         public IActionResult GetAll()
         {
-            var items = ItemService.GetAll();
-            return Ok(items);
+            return Ok(_itemService.GetAll());
         }
 
-        [HttpGet, Route("items/{itemId}")]
+        [HttpGet]
+        [Route("items/{itemId}")]
         public IActionResult Get(int itemId)
         {
-            var item = ItemService.Get(itemId);
-            return Ok(item);
+            return Ok(_itemService.Get(itemId));
         }
 
-        [HttpGet, Route("items/filterBy")]
-        public IActionResult GetByFilters([FromQuery] Dictionary<string, string> filters)
+        [HttpGet]
+        [Route("items/filterBy")]
+        public IActionResult GetByFilters([FromQuery] ItemFilterBindingModel filters)
         {
-            return Ok(null);
+            return Ok(_itemService.GetAllByFilter(filters.Map()));
         }
 
-        [HttpPost, Route("items")]
-        public IActionResult Post([FromBody] ItemCreateBindingModel itemCreateModel)
+        [HttpPost]
+        [Route("items")]
+        public IActionResult Post([FromBody] ItemCreateBindingModel data)
         {
-            var itemDTO = new ItemDTO()
-            {
-                Text = itemCreateModel.Text
-            };
-
-            var isSuccess = ItemService.Save(itemDTO);
-
-            return Ok(isSuccess);
+            _itemService.Add(data.Map());
+            return Ok();
         }
 
-        [HttpPut, Route("items/{itemId}")]
-        public IActionResult Put(int itemId, [FromBody] ItemCreateBindingModel itemCreateModel)
+        [HttpPut]
+        [Route("items/{itemId}")]
+        public IActionResult Put(int itemId, [FromBody] ItemUpdateBindingModel data)
         {
-            var itemDTO = new ItemDTO()
-            {
-                Id = itemId,
-                Text = itemCreateModel.Text
-            };
-
-            var isSuccess = ItemService.Update(itemDTO);
-            return Ok(isSuccess);
+            data.Id = itemId;
+            _itemService.Update(data.Map());
+            return Ok();
         }
 
-        [HttpDelete, Route("items/{itemId}")]
+        [HttpDelete]
+        [Route("items/{itemId}")]
         public IActionResult Delete(int itemId)
         {
-            var isSuccess = ItemService.Delete(itemId);
-            return Ok(isSuccess);
+            _itemService.Delete(itemId);
+            return Ok();
         }
     }
 }

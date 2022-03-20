@@ -27,3 +27,7 @@ C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ref\ASPNetCoreMastersToDoList.dll
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.pdb
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.genruntimeconfig.cache
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\DomainModels.dll
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Repositories.dll
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\DomainModels.pdb
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Repositories.pdb

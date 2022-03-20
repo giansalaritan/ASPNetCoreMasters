@@ -22,20 +22,10 @@ else
     app.UseHsts();
 }
 
-app.UseRouting();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseEndpoints(endpoints =>
-{
-
-});
-
-app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller}/{action}/{id?}");
-
 app.Run();
- 

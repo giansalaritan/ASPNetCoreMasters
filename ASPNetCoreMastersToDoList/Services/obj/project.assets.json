@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "DomainModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/DomainModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DomainModels.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "DomainModels/1.0.0": {
+      "type": "project",
+      "path": "../DomainModels/DomainModels.csproj",
+      "msbuildProject": "../DomainModels/DomainModels.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "DomainModels >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\gian.salaritan\\.nuget\\packages\\": {},
@@ -43,7 +62,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\gian.salaritan\\source\\repos\\ASPNetCoreMasters\\ASPNetCoreMastersToDoList\\DomainModels\\DomainModels.csproj": {
+              "projectPath": "C:\\Users\\gian.salaritan\\source\\repos\\ASPNetCoreMasters\\ASPNetCoreMastersToDoList\\DomainModels\\DomainModels.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

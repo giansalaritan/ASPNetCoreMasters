@@ -10,8 +10,12 @@ C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\DomainModels.dll
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Repositories.dll
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Services.dll
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Services.pdb
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\DomainModels.pdb
+C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Repositories.pdb
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.csproj.AssemblyReference.cache
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.AssemblyInfoInputs.cache
@@ -27,7 +31,3 @@ C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ref\ASPNetCoreMastersToDoList.dll
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.pdb
 C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\obj\Debug\net6.0\ASPNetCoreMastersToDoList.genruntimeconfig.cache
-C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\DomainModels.dll
-C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Repositories.dll
-C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\DomainModels.pdb
-C:\Users\gian.salaritan\source\repos\ASPNetCoreMasters\ASPNetCoreMastersToDoList\ASPNetCoreMastersToDoList\bin\Debug\net6.0\Repositories.pdb

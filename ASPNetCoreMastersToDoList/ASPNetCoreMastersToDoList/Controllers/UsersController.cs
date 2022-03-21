@@ -1,5 +1,6 @@
 ﻿using ASPNetCoreMastersToDoList.BindingModels;
 using ASPNetCoreMastersToDoList.ConfigModels;
+using DomainModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -15,9 +16,9 @@ namespace ASPNetCoreMastersToDoList.Controllers
     public class UsersController : ControllerBase
     {
         private readonly JWTConfigModel _jwt;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(IOptions<JWTConfigModel> options, UserManager<IdentityUser> userManager)
+        public UsersController(IOptions<JWTConfigModel> options, UserManager<User> userManager)
         {
             _jwt = options.Value;
             _userManager = userManager;
@@ -26,7 +27,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Register(RegisterBindingModel model)
         {
-            var user = new IdentityUser
+            var user = new User
             {
                 UserName = model.Email,
                 Email = model.Email
@@ -97,12 +98,13 @@ namespace ASPNetCoreMastersToDoList.Controllers
             return actionResult;
         }
 
-        private string GenerateTokenAsync(IdentityUser user)
+        private string GenerateTokenAsync(User user)
         {
             IList<Claim> userClaims = new List<Claim>
             {
-                new Claim("UserName", user.UserName),
-                new Claim("Email", user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             return new JwtSecurityTokenHandler().WriteToken(

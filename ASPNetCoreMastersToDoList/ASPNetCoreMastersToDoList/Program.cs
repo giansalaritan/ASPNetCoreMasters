@@ -7,6 +7,11 @@ using Microsoft.OpenApi.Models;
 using Repositories;
 using Services;
 using System.Text;
+using ASPNetCoreMastersToDoList.Constants;
+using ASPNetCoreMastersToDoList.AuthorizationRequirements;
+using Microsoft.AspNetCore.Authorization;
+using DomainModels;
+using ASPNetCoreMastersToDoList.AuthorizationHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,10 +55,11 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddDbContext<DataDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<DataDbContext>()
     .AddDefaultTokenProviders();
 
@@ -76,6 +82,14 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = key
         };
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthorizationConstants.CanEditItems,
+        policy => policy.Requirements.Add(new CanEditItemsRequirement()));
+});
+
+builder.Services.AddScoped<IAuthorizationHandler, CanEditItemsHandler>();
 
 var app = builder.Build();
 

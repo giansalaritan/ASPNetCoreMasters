@@ -12,6 +12,7 @@ namespace ASPNetCoreMastersToDoList.Controllers
         {
             _jwt = options.Value;
         }
+
         [HttpGet]
         [Route("/login")]
         public IActionResult Login()

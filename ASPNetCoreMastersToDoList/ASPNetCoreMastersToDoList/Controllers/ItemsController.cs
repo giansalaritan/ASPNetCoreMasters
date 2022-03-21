@@ -1,10 +1,12 @@
 ﻿using ASPNetCoreMastersToDoList.BindingModels;
+using ASPNetCoreMastersToDoList.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
     [ApiController]
+    [ServiceFilter(typeof(EnsureItemExistsFilter))]
     public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;

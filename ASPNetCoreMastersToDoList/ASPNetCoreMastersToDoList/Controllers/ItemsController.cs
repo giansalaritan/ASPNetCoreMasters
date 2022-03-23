@@ -1,8 +1,12 @@
 ﻿using ASPNetCoreMastersToDoList.BindingModels;
+using ASPNetCoreMastersToDoList.Constants;
 using ASPNetCoreMastersToDoList.Filters;
+using DomainModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Security.Claims;
 
 namespace ASPNetCoreMastersToDoList.Controllers
 {
@@ -12,10 +16,14 @@ namespace ASPNetCoreMastersToDoList.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;
+        private readonly IAuthorizationService _authService;
+        private readonly UserManager<User> _userService;
 
-        public ItemsController(IItemService itemService)
+        public ItemsController(IItemService itemService, IAuthorizationService authorization, UserManager<User> userService)
         {
             _itemService = itemService;
+            _authService = authorization;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -41,18 +49,27 @@ namespace ASPNetCoreMastersToDoList.Controllers
 
         [HttpPost]
         [Route("items")]
-        public IActionResult Post([FromBody] ItemCreateBindingModel data)
+        public async Task<IActionResult> PostAsync([FromBody] ItemCreateBindingModel data)
         {
-            _itemService.Add(data.Map());
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = await _userService.FindByNameAsync(email);
+            _itemService.Add(data.Map(), user);
             return Ok();
         }
 
+        [Authorize]
         [HttpPut]
         [Route("items/{itemId}")]
-        public IActionResult Put(int itemId, [FromBody] ItemUpdateBindingModel data)
+        public async Task<IActionResult> Put(int itemId, [FromBody] ItemUpdateBindingModel data)
         {
-            data.Id = itemId;
-            _itemService.Update(data.Map());
+            var item = _itemService.Get(itemId);
+            item.Text = data.Text;
+            var authResult = await _authService.AuthorizeAsync(User, item, AuthorizationConstants.CanEditItems);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+            _itemService.Update(item);
             return Ok();
         }
 

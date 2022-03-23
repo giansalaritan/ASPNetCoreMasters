@@ -1,4 +1,5 @@
-﻿using Services.DTO;
+﻿using DomainModels;
+using Services.DTO;
 
 namespace Services
 {
@@ -10,10 +11,10 @@ namespace Services
 
         IEnumerable<ItemDTO> GetAllByFilter(ItemByFilterDTO filters);
 
-        void Add(ItemDTO itemDTO);
+        void Add(ItemDTO itemDTO, User user);
 
         void Update(ItemDTO itemDTO);
 
-        void Delete(int itemId);
+        void Delete(int id);
     }
 }

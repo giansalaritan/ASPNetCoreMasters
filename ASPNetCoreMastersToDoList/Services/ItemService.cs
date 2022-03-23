@@ -33,9 +33,18 @@ namespace Services
             return list;
         }
 
-        public void Add(ItemDTO itemDTO)
+        public void Add(ItemDTO itemDTO, User user)
         {
-            _itemRepository.Save(itemDTO.Map());
+            try
+            {
+                itemDTO.CreatedBy = Guid.Parse(user.Id);
+                itemDTO.DateCreated = DateTime.UtcNow;
+                _itemRepository.Save(itemDTO.Map());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message.ToString());
+            }
         }
 
         public void Update(ItemDTO itemDTO)
@@ -55,7 +64,9 @@ namespace Services
                 new ItemDTO()
                 {
                     Id = item.Id,
-                    Text = item.Text
+                    Text = item.Text,
+                    CreatedBy = item.CreatedBy,
+                    DateCreated = item.DateCreated
                 };
         }
     }

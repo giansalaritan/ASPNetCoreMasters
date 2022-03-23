@@ -15,8 +15,7 @@ namespace Services
         public IEnumerable<ItemDTO> GetAll()
         {
             return _itemRepository.All()
-                .Select(x => MapItem(x))
-                .AsEnumerable<ItemDTO>();
+                .Select(x => MapItem(x));
         }
 
         public ItemDTO Get(int itemId)
@@ -28,10 +27,9 @@ namespace Services
 
         public IEnumerable<ItemDTO> GetAllByFilter(ItemByFilterDTO filters)
         {
-            var list = _itemRepository.All()
-                .Where(x => x.Text.Contains(filters.Text, StringComparison.OrdinalIgnoreCase))
-                .Select(x => MapItem(x))
-                .AsEnumerable<ItemDTO>();
+            var list = _itemRepository.All().ToList()
+                .Where(x => x.Text.Contains(filters.Text, StringComparison.CurrentCultureIgnoreCase))
+                .Select(x => MapItem(x));
             return list;
         }
 
@@ -45,12 +43,12 @@ namespace Services
             _itemRepository.Save(itemDTO.Map());
         }
 
-        public void Delete(int itemId)
+        public void Delete(int id)
         {
-            _itemRepository.Delete(itemId);
+            _itemRepository.Delete(id);
         }
 
-        private ItemDTO MapItem(Item? item)
+        private static ItemDTO MapItem(Item? item)
         {
             return item == null ?
                 new ItemDTO() :

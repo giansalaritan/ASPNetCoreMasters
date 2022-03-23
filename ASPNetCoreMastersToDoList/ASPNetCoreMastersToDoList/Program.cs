@@ -1,4 +1,5 @@
 using ASPNetCoreMastersToDoList.ConfigModels;
+using ASPNetCoreMastersToDoList.Filters;
 using Repositories;
 using Services;
 
@@ -8,10 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DataContext>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<EnsureItemExistsFilter>();
 
 builder.Services.Configure<JWTConfigModel>(builder.Configuration.GetSection("Authentication:JWT"));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(config =>
+{
+    config.Filters.Add(new PerformanceFilter());
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

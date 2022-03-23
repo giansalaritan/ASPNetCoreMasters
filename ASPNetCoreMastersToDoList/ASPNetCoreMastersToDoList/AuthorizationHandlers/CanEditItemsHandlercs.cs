@@ -24,7 +24,7 @@ namespace ASPNetCoreMastersToDoList.AuthorizationHandlers
                 return;
             }
 
-            if (resource.CreatedBy == Guid.Parse(appUser.Id)
+            if (resource.CreatedBy == Guid.Parse(appUser.Id))
             {
                 context.Succeed(requirement);
             }

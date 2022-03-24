@@ -12,33 +12,47 @@ using ASPNetCoreMastersToDoList.AuthorizationRequirements;
 using Microsoft.AspNetCore.Authorization;
 using DomainModels;
 using ASPNetCoreMastersToDoList.AuthorizationHandlers;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
-// Add services to the container.
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddScoped<IItemService, ItemService>();
-builder.Services.AddScoped<EnsureItemExistsFilter>();
+Log.Information("Starting up");
 
-builder.Services.Configure<JWTConfigModel>(builder.Configuration.GetSection("Authentication:JWT"));
-
-builder.Services.AddControllers(config =>
+try
 {
-    config.Filters.Add(new PerformanceFilter());
-});
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Add services to the container.
+    builder.Host.UseSerilog((ctx, lc) => lc
+    .WriteTo.Console()
+    .ReadFrom.Configuration(ctx.Configuration));
+
+    builder.Services.AddScoped<IItemRepository, ItemRepository>();
+    builder.Services.AddScoped<IItemService, ItemService>();
+    builder.Services.AddScoped<EnsureItemExistsFilter>();
+
+    builder.Services.Configure<JWTConfigModel>(builder.Configuration.GetSection("Authentication:JWT"));
+
+    builder.Services.AddControllers(config =>
     {
-        In = ParameterLocation.Header,
-        Description = "Please insert JWT with Bearer into the field.",
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
+        config.Filters.Add(new PerformanceFilter());
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(c =>
     {
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please insert JWT with Bearer into the field.",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
         {
             new OpenApiSecurityScheme
             {
@@ -50,68 +64,79 @@ builder.Services.AddSwaggerGen(c =>
             },
             new string[] { }
         }
+        });
     });
-});
 
-builder.Services.AddDbContext<DataDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-});
-
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<DataDbContext>()
-    .AddDefaultTokenProviders();
-
-SecurityKey key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Authentication")["JWT:SecurityKey"]));
-
-builder.Services.Configure<JWTConfigModel>(_ => _.SecurityKey = key);
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = "Bearer";
-    options.DefaultChallengeScheme = "Bearer";
-    options.DefaultScheme = "Bearer";
-})
-    .AddJwtBearer(options =>
+    builder.Services.AddDbContext<DataDbContext>(options =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateAudience = false,
-            ValidateIssuer = false,
-            IssuerSigningKey = key
-        };
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy(AuthorizationConstants.CanEditItems,
-        policy => policy.Requirements.Add(new CanEditItemsRequirement()));
-});
+    builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<DataDbContext>()
+        .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<IAuthorizationHandler, CanEditItemsHandler>();
+    SecurityKey key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Authentication")["JWT:SecurityKey"]));
 
-var app = builder.Build();
+    builder.Services.Configure<JWTConfigModel>(_ => _.SecurityKey = key);
 
-// Configure the HTTP request pipeline.
-//app.Environment.EnvironmentName = "Production";
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = "Bearer";
+        options.DefaultChallengeScheme = "Bearer";
+        options.DefaultScheme = "Bearer";
+    })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                IssuerSigningKey = key
+            };
+        });
+
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy(AuthorizationConstants.CanEditItems,
+            policy => policy.Requirements.Add(new CanEditItemsRequirement()));
+    });
+
+    builder.Services.AddScoped<IAuthorizationHandler, CanEditItemsHandler>();
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    //app.Environment.EnvironmentName = "Production";
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.UseDeveloperExceptionPage();
+    }
+    else
+    {
+        app.UseExceptionHandler("/error");
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+
 }
-else
+catch (Exception ex)
 {
-    app.UseExceptionHandler("/error");
+    Log.Fatal(ex, "Unhandled exception");
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+finally
+{
+    Log.Information("Shut down complete");
+    Log.CloseAndFlush();
+}
